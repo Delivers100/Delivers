@@ -18,18 +18,18 @@ export function middleware(request: NextRequest) {
       const decoded = verifyToken(token);
       
       // Check role-based access
-      if (request.nextUrl.pathname.startsWith('/admin') && decoded.role !== 'admin') {
+      if (request.nextUrl.pathname.startsWith('/admin') && decoded.accountType !== 'admin') {
         return NextResponse.redirect(new URL('/dashboard', request.url));
       }
       
-      if (request.nextUrl.pathname.startsWith('/seller') && decoded.role !== 'seller') {
+      if (request.nextUrl.pathname.startsWith('/seller') && decoded.accountType !== 'business') {
         return NextResponse.redirect(new URL('/dashboard', request.url));
       }
       
-      if (request.nextUrl.pathname.startsWith('/buyer') && decoded.role !== 'buyer') {
+      if (request.nextUrl.pathname.startsWith('/buyer') && decoded.accountType !== 'consumer') {
         return NextResponse.redirect(new URL('/dashboard', request.url));
       }
-    } catch (error) {
+    } catch {
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }

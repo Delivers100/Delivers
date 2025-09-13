@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { User } from '@/lib/auth';
 
 interface PendingUser {
   id: number;
@@ -11,11 +12,18 @@ interface PendingUser {
   businessName: string;
   phone?: string;
   created_at: string;
-  documents: any[];
+  documents: {
+    file_name: string;
+    file_type: string;
+    status: string;
+    document_type: string;
+    upload_date: string;
+    file_url: string;
+  }[];
 }
 
 export default function AdminDashboardPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState<PendingUser | null>(null);
@@ -48,8 +56,8 @@ export default function AdminDashboardPage() {
       if (data.users) {
         setPendingUsers(data.users);
       }
-    } catch (error) {
-      console.error('Error fetching pending users:', error);
+    } catch {
+      
     } finally {
       setLoading(false);
     }
@@ -74,7 +82,7 @@ export default function AdminDashboardPage() {
         const data = await response.json();
         alert(`Error: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     } finally {
       setActionLoading(null);

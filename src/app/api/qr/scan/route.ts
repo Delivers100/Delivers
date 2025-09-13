@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
         }
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('QR scan error:', error);
     return NextResponse.json(
       { error: 'Error al escanear código QR' },

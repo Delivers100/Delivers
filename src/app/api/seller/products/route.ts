@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'seller') {
+    if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only sellers can access this endpoint' },
         { status: 403 }
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json({ products });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get seller products error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'seller') {
+    if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only sellers can create products' },
         { status: 403 }
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
         images: []
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Create product error:', error);
     return NextResponse.json(
       { error: 'Failed to create product' },

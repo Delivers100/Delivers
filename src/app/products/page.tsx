@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/auth';
 
 interface Product {
   id: number;
@@ -29,7 +30,7 @@ const categories = [
 export default function ProductCatalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [filters, setFilters] = useState({
     category: 'Todos',
     search: '',
@@ -38,21 +39,7 @@ export default function ProductCatalog() {
   const [cart, setCart] = useState<{[key: number]: number}>({});
   const router = useRouter();
 
-  useEffect(() => {
-    // Check if user is logged in
-    fetch('/api/auth/me')
-      .then(res => res.ok ? res.json() : null)
-      .then(data => {
-        if (data?.user) {
-          setUser(data.user);
-        }
-      })
-      .catch(() => {});
-
-    fetchProducts();
-  }, [filters]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const queryParams = new URLSearchParams();
@@ -70,7 +57,21 @@ export default function ProductCatalog() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    // Check if user is logged in
+    fetch('/api/auth/me')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data?.user) {
+          setUser(data.user);
+        }
+      })
+      .catch(() => {});
+
+    fetchProducts();
+  }, [filters, fetchProducts]);
 
   const addToCart = (productId: number, quantity: number) => {
     if (!user) {

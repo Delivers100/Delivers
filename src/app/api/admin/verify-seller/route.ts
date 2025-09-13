@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'admin') {
+    if (decoded.accountType !== 'admin') {
       return NextResponse.json(
         { error: 'Admin access required' },
         { status: 403 }
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: `Seller ${action}ed successfully`
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Verify seller error:', error);
     return NextResponse.json(
       { error: 'Failed to update seller verification' },

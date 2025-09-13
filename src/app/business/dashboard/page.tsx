@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { User } from '@/lib/auth';
 import Link from 'next/link';
 import QRCodeDisplay from '@/components/QRCodeDisplay';
 import QRCodeModal from '@/components/QRCodeModal';
@@ -31,7 +32,7 @@ const categories = [
 ];
 
 export default function BusinessDashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -77,8 +78,8 @@ export default function BusinessDashboard() {
       if (data.products) {
         setProducts(data.products);
       }
-    } catch (error) {
-      console.error('Error fetching products:', error);
+    } catch {
+      
     } finally {
       setLoading(false);
     }
@@ -120,7 +121,7 @@ export default function BusinessDashboard() {
       } else {
         alert(`Error: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     } finally {
       setSubmitting(false);
@@ -147,7 +148,7 @@ export default function BusinessDashboard() {
       } else {
         alert('Error al actualizar producto');
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     }
   };
@@ -165,7 +166,7 @@ export default function BusinessDashboard() {
       } else {
         alert('Error al actualizar stock');
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     }
   };

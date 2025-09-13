@@ -3,19 +3,26 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/auth';
 
-interface CartItem {
+interface Product {
   id: number;
   name: string;
   public_price: number;
   category: string;
   stock_quantity: number;
   min_order_quantity: number;
+  images?: string[];
+  is_active?: boolean;
+  created_at?: string;
+}
+
+interface CartItem extends Product {
   quantity: number;
 }
 
 export default function CartPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -38,7 +45,7 @@ export default function CartPage() {
 
     // Load cart from localStorage and fetch product details
     loadCartItems();
-  }, []);
+  }, [router]);
 
   const loadCartItems = async () => {
     try {
@@ -56,8 +63,8 @@ export default function CartPage() {
       
       if (data.products) {
         const items = data.products
-          .filter((product: any) => cart[product.id])
-          .map((product: any) => ({
+          .filter((product: Product) => cart[product.id])
+          .map((product: Product) => ({
             ...product,
             quantity: cart[product.id]
           }));

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'admin') {
+    if (decoded.accountType !== 'admin') {
       return NextResponse.json(
         { error: 'Admin access required' },
         { status: 403 }
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json({ users });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get pending sellers error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch pending sellers' },

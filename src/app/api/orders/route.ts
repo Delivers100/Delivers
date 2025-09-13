@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
       // Calculate business payment (business gets their price per unit)
       const businessPayment = item.businessPrice * item.quantity;
       const platformFee = item.total - businessPayment;
-      const deliveryFee = 5000; // Fixed delivery fee per item for now
+      // Delivery fee is included in the price calculation
 
       // Create instant business payment record
       await sql`
@@ -191,7 +191,7 @@ export async function POST(request: NextRequest) {
       businessPaymentsProcessed: validatedItems.length
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Order processing error:', error);
     return NextResponse.json(
       { error: 'Failed to process order' },
@@ -239,7 +239,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ orders });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get orders error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch orders' },

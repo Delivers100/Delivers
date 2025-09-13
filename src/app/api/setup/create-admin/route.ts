@@ -46,10 +46,10 @@ export async function POST(request: NextRequest) {
         lastName: admin.lastName
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Create admin error:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to create admin user' },
+      { error: error instanceof Error ? error.message : 'Failed to create admin user' },
       { status: 500 }
     );
   }

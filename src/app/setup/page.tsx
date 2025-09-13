@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function SetupPage() {
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ export default function SetupPage() {
       } else {
         setError(data.error || 'Error creating admin');
       }
-    } catch (error) {
+    } catch {
       setError('Connection error');
     } finally {
       setLoading(false);
@@ -60,18 +61,18 @@ export default function SetupPage() {
             You can now login with your admin credentials.
           </p>
           <div className="space-y-2">
-            <a
+            <Link
               href="/login"
-              className="block w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
+              className="block w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition text-center"
             >
               Go to Login
-            </a>
-            <a
+            </Link>
+            <Link
               href="/admin/dashboard"
-              className="block w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition"
+              className="block w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition text-center"
             >
               Go to Admin Dashboard
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -174,9 +175,9 @@ export default function SetupPage() {
           </div>
 
           <div className="text-center">
-            <a href="/" className="text-green-600 hover:text-green-500 text-sm">
+            <Link href="/" className="text-green-600 hover:text-green-500 text-sm">
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </form>
       </div>

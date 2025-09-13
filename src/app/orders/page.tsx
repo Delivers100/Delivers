@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/auth';
 
 interface Order {
   id: number;
@@ -14,7 +15,7 @@ interface Order {
 }
 
 export default function OrdersPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function OrdersPage() {
 
     // Load orders
     loadOrders();
-  }, []);
+  }, [router]);
 
   const loadOrders = async () => {
     try {

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'seller') {
+    if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only sellers can access this endpoint' },
         { status: 403 }
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       documents: result.rows
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get documents error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch documents' },

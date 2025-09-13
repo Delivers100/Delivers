@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'seller') {
+    if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only sellers can submit for verification' },
         { status: 403 }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: 'Verification submitted successfully. You will be contacted within 24-48 hours.'
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Submit verification error:', error);
     return NextResponse.json(
       { error: 'Failed to submit verification' },

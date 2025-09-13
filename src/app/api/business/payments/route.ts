@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
       payments
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get business payments error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch payment data' },

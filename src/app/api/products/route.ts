@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       JOIN users u ON p.business_id = u.id 
       WHERE p.is_active = true AND u.is_verified = true AND p.stock_quantity > 0
     `;
-    const params: any[] = [];
+    const params: (string | number)[] = [];
     let paramCount = 0;
 
     if (category && category !== 'Todos') {
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
         hasMore: result.rows.length === limit
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get products error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },

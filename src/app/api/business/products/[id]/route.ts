@@ -4,11 +4,11 @@ import { sql } from '@vercel/postgres';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const token = request.cookies.get('token')?.value;
-    
+
     if (!token) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -17,6 +17,7 @@ export async function PATCH(
     }
 
     const decoded = verifyToken(token);
+    const { id } = await params;
     
     if (decoded.accountType !== 'business') {
       return NextResponse.json(
@@ -25,7 +26,7 @@ export async function PATCH(
       );
     }
 
-    const productId = parseInt(params.id);
+    const productId = parseInt(id);
     if (isNaN(productId)) {
       return NextResponse.json(
         { error: 'Invalid product ID' },
@@ -50,7 +51,7 @@ export async function PATCH(
     }
 
     let updateQuery = 'UPDATE products SET updated_at = CURRENT_TIMESTAMP';
-    const values: any[] = [];
+    const values: (string | number | boolean | null)[] = [];
     let valueIndex = 1;
 
     if (isActive !== undefined) {
@@ -114,7 +115,7 @@ export async function PATCH(
         images: updatedProduct.images || []
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Update product error:', error);
     return NextResponse.json(
       { error: 'Failed to update product' },
@@ -125,11 +126,11 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const token = request.cookies.get('token')?.value;
-    
+
     if (!token) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -138,7 +139,8 @@ export async function DELETE(
     }
 
     const decoded = verifyToken(token);
-    
+    const { id } = await params;
+
     if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only businesses can delete products' },
@@ -146,7 +148,7 @@ export async function DELETE(
       );
     }
 
-    const productId = parseInt(params.id);
+    const productId = parseInt(id);
     if (isNaN(productId)) {
       return NextResponse.json(
         { error: 'Invalid product ID' },
@@ -171,7 +173,7 @@ export async function DELETE(
     return NextResponse.json({
       message: 'Product deleted successfully'
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Delete product error:', error);
     return NextResponse.json(
       { error: 'Failed to delete product' },

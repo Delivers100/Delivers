@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { User } from '@/lib/auth';
 
 interface DocumentType {
   id: string;
@@ -38,11 +39,17 @@ const documentTypes: DocumentType[] = [
 ];
 
 export default function DocumentsPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [uploads, setUploads] = useState<{ [key: string]: File | null }>({});
   const [uploading, setUploading] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [existingDocs, setExistingDocs] = useState<any[]>([]);
+  const [existingDocs, setExistingDocs] = useState<{
+    file_name: string;
+    file_type: string;
+    status: string;
+    document_type: string;
+    verification_status: string;
+  }[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -109,7 +116,7 @@ export default function DocumentsPage() {
       } else {
         alert(`Error subiendo documento: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión al subir documento');
     } finally {
       setUploading(null);
@@ -129,7 +136,7 @@ export default function DocumentsPage() {
       } else {
         alert(`Error: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error al enviar para revisión');
     }
   };

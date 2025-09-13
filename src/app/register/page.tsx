@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function RegisterPage() {
+function RegisterForm() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -90,7 +90,7 @@ export default function RegisterPage() {
       } else {
         setError(data.error || 'Error al registrarse');
       }
-    } catch (error) {
+    } catch {
       setError('Error de conexión');
     } finally {
       setLoading(false);
@@ -339,5 +339,13 @@ export default function RegisterPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }

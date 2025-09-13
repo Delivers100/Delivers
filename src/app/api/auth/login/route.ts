@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       user: {
         id: user.id,
         email: user.email,
-        role: user.role,
+        accountType: user.accountType,
         firstName: user.firstName,
         lastName: user.lastName,
         businessName: user.businessName,
@@ -38,10 +38,10 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: error.message || 'Login failed' },
+      { error: error instanceof Error ? error.message : 'Login failed' },
       { status: 401 }
     );
   }

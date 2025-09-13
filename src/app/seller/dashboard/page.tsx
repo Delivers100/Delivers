@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { User } from '@/lib/auth';
 
 interface Product {
   id: number;
@@ -25,7 +26,7 @@ const categories = [
 ];
 
 export default function SellerDashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -69,8 +70,8 @@ export default function SellerDashboard() {
       if (data.products) {
         setProducts(data.products);
       }
-    } catch (error) {
-      console.error('Error fetching products:', error);
+    } catch {
+      
     } finally {
       setLoading(false);
     }
@@ -110,7 +111,7 @@ export default function SellerDashboard() {
       } else {
         alert(`Error: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     } finally {
       setSubmitting(false);
@@ -137,7 +138,7 @@ export default function SellerDashboard() {
       } else {
         alert('Error al actualizar producto');
       }
-    } catch (error) {
+    } catch {
       alert('Error de conexión');
     }
   };

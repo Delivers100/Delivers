@@ -39,10 +39,19 @@ export function generateToken(user: User): string {
   );
 }
 
-export function verifyToken(token: string): any {
+interface TokenPayload {
+  userId: number;
+  email: string;
+  accountType: 'admin' | 'consumer' | 'business';
+  canSell: boolean;
+  iat?: number;
+  exp?: number;
+}
+
+export function verifyToken(token: string): TokenPayload {
   try {
-    return jwt.verify(token, JWT_SECRET);
-  } catch (error) {
+    return jwt.verify(token, JWT_SECRET) as TokenPayload;
+  } catch {
     throw new Error('Invalid token');
   }
 }

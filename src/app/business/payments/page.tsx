@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/auth';
 
 interface Payment {
   id: number;
@@ -28,7 +29,7 @@ interface TodayStats {
 }
 
 export default function BusinessPaymentsPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [summary, setSummary] = useState<PaymentSummary | null>(null);
   const [todayStats, setTodayStats] = useState<TodayStats | null>(null);
@@ -55,7 +56,7 @@ export default function BusinessPaymentsPage() {
 
     // Load payment data
     loadPayments();
-  }, []);
+  }, [router]);
 
   const loadPayments = async () => {
     try {

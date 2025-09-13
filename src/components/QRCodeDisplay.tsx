@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import QRCode from 'qrcode';
 
 interface QRCodeDisplayProps {
@@ -65,11 +66,12 @@ export default function QRCodeDisplay({ value, size = 200, className = '' }: QRC
 
   return (
     <div className={className}>
-      <img 
-        src={qrCodeUrl} 
+      <Image
+        src={qrCodeUrl}
         alt={`QR Code: ${value}`}
+        width={size}
+        height={size}
         className="border rounded"
-        style={{ width: size, height: size }}
       />
     </div>
   );

@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
     const decoded = verifyToken(token);
     
-    if (decoded.role !== 'seller') {
+    if (decoded.accountType !== 'business') {
       return NextResponse.json(
         { error: 'Only sellers can upload documents' },
         { status: 403 }
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
       fileName: file.name,
       documentType
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Upload document error:', error);
     return NextResponse.json(
       { error: 'Failed to upload document' },

@@ -226,7 +226,7 @@ export default function QRScanPage() {
             </li>
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">3.</span>
-              Haz clic en "Buscar Producto" para ver la información
+              Haz clic en &quot;Buscar Producto&quot; para ver la información
             </li>
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">4.</span>

@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json({ products });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get business products error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         images: []
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Create product error:', error);
     return NextResponse.json(
       { error: 'Failed to create product' },

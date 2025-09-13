@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
     
     // Get user data from database
     const result = await sql`
-      SELECT id, email, role, first_name, last_name, business_name, is_verified, verification_status
-      FROM users 
+      SELECT id, email, account_type, first_name, last_name, business_name, is_verified, verification_status
+      FROM users
       WHERE id = ${decoded.userId}
     `;
 
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
       user: {
         id: user.id,
         email: user.email,
-        role: user.role,
+        accountType: user.account_type,
         firstName: user.first_name,
         lastName: user.last_name,
         businessName: user.business_name,
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
         verificationStatus: user.verification_status
       }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Auth verification error:', error);
     return NextResponse.json(
       { error: 'Invalid token' },
