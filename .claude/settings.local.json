@@ -11,7 +11,13 @@
       "Bash(git config:*)",
       "Bash(git add:*)",
       "Bash(git rm:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git log:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git restore:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []
