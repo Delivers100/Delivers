@@ -23,7 +23,8 @@
       "Bash(npm run build:*)",
       "Bash(npx tsc:*)",
       "Bash(npm run type-check:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(vercel env pull:*)"
     ],
     "deny": [],
     "ask": []

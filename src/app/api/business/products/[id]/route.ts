@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
-import { sql } from '@vercel/postgres';
+import { sql } from '@/lib/db';
 
 export async function PATCH(
   request: NextRequest,
