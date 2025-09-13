@@ -5,7 +5,9 @@
       "Bash(npm install:*)",
       "Bash(npm run dev:*)",
       "Read(//c/Users/anaim/**)",
-      "Bash(git remote remove:*)"
+      "Bash(git remote remove:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
