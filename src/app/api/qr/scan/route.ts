@@ -22,14 +22,14 @@ export async function POST(request: NextRequest) {
       WHERE p.qr_code = ${qr_code} AND p.is_active = true AND u.is_verified = true
     `;
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return NextResponse.json(
         { error: 'Producto no encontrado o no disponible' },
         { status: 404 }
       );
     }
 
-    const product = result.rows[0];
+    const product = result[0];
 
     // Check if product has sufficient stock
     if (product.stock_quantity < product.min_order_quantity) {

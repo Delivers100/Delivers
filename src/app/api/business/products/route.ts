@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
       ORDER BY created_at DESC
     `;
 
-    const products = result.rows.map(row => ({
+    const products = result.map(row => ({
       ...row,
       images: row.images || []
     }));
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       SELECT is_verified FROM users WHERE id = ${decoded.userId}
     `;
 
-    if (userResult.rows.length === 0 || !userResult.rows[0].is_verified) {
+    if (userResult.length === 0 || !userResult[0].is_verified) {
       return NextResponse.json(
         { error: 'Business must be verified to create products' },
         { status: 403 }
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
                 qr_code, is_active, created_at
     `;
 
-    const product = result.rows[0];
+    const product = result[0];
 
     return NextResponse.json({
       message: 'Product created successfully with QR code',

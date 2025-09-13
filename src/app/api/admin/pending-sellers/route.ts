@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       ORDER BY u.created_at ASC
     `;
 
-    const users = result.rows.map(row => ({
+    const users = result.map(row => ({
       id: row.id,
       email: row.email,
       firstName: row.first_name,

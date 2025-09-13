@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     const result = await sql.query(query, params);
 
-    const products = result.rows.map(row => ({
+    const products = result.map(row => ({
       id: row.id,
       name: row.name,
       description: row.description,
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       pagination: {
         page,
         limit,
-        hasMore: result.rows.length === limit
+        hasMore: result.length === limit
       }
     });
   } catch (error) {

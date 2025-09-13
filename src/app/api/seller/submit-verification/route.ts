@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         WHERE user_id = ${decoded.userId} AND document_type = ${docType}
       `;
       
-      if (result.rows.length === 0) {
+      if (result.length === 0) {
         return NextResponse.json(
           { error: `Missing required document: ${docType}` },
           { status: 400 }

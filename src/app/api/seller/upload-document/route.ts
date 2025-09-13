@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
       WHERE user_id = ${decoded.userId} AND document_type = ${documentType}
     `;
 
-    if (existingDoc.rows.length > 0) {
+    if (existingDoc.length > 0) {
       // Update existing document
       await sql`
         UPDATE documents 

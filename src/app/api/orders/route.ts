@@ -62,14 +62,14 @@ export async function POST(request: NextRequest) {
         WHERE p.id = ${productId} AND p.is_active = true AND u.is_verified = true
       `;
 
-      if (productResult.rows.length === 0) {
+      if (productResult.length === 0) {
         return NextResponse.json(
           { error: `Product ${productId} not found or not available` },
           { status: 400 }
         );
       }
 
-      const product = productResult.rows[0];
+      const product = productResult[0];
 
       if (quantity < product.min_order_quantity) {
         return NextResponse.json(
@@ -108,8 +108,8 @@ export async function POST(request: NextRequest) {
       RETURNING id, created_at
     `;
 
-    const orderId = orderResult.rows[0].id;
-    const orderDate = orderResult.rows[0].created_at;
+    const orderId = orderResult[0].id;
+    const orderDate = orderResult[0].created_at;
 
     // Create order items and process payments
     for (const item of validatedItems) {
@@ -231,7 +231,7 @@ export async function GET(request: NextRequest) {
       ORDER BY o.created_at DESC
     `;
 
-    const orders = result.rows.map(row => ({
+    const orders = result.map(row => ({
       ...row,
       total_amount: parseFloat(row.total_amount),
       items_count: parseInt(row.items_count)

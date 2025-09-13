@@ -1,8 +1,15 @@
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.DATABASE_URL || '');
+// Only initialize database connection if DATABASE_URL is available
+const sql = process.env.DATABASE_URL
+  ? neon(process.env.DATABASE_URL)
+  : null;
 
 export async function createTables() {
+  if (!sql) {
+    throw new Error('Database connection not available');
+  }
+
   try {
     // Users table
     await sql`
@@ -186,5 +193,13 @@ export async function createTables() {
     throw error;
   }
 }
+
+// Export a safe SQL function that throws error if no connection
+export const sqlQuery = async (query: any, ...params: any[]) => {
+  if (!sql) {
+    throw new Error('Database connection not available');
+  }
+  return sql(query, ...params);
+};
 
 export { sql };

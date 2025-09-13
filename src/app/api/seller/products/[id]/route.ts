@@ -43,7 +43,7 @@ export async function PATCH(
       WHERE id = ${productId} AND seller_id = ${decoded.userId}
     `;
 
-    if (productResult.rows.length === 0) {
+    if (productResult.length === 0) {
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }
@@ -96,7 +96,7 @@ export async function PATCH(
     // Execute update using raw query (since sql template doesn't support dynamic queries easily)
     const result = await sql.query(updateQuery, values);
 
-    const updatedProduct = result.rows[0];
+    const updatedProduct = result[0];
 
     return NextResponse.json({
       message: 'Product updated successfully',
@@ -153,7 +153,7 @@ export async function DELETE(
       RETURNING id
     `;
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }

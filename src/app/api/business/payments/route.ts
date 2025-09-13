@@ -34,11 +34,11 @@ export async function GET(request: NextRequest) {
     `;
 
     const summary = {
-      ...summaryResult.rows[0],
-      total_earned: parseFloat(summaryResult.rows[0].total_earned || '0'),
-      total_fees: parseFloat(summaryResult.rows[0].total_fees || '0'),
-      total_payments: parseInt(summaryResult.rows[0].total_payments || '0'),
-      total_items_sold: parseInt(summaryResult.rows[0].total_items_sold || '0')
+      ...summaryResult[0],
+      total_earned: parseFloat(summaryResult[0].total_earned || '0'),
+      total_fees: parseFloat(summaryResult[0].total_fees || '0'),
+      total_payments: parseInt(summaryResult[0].total_payments || '0'),
+      total_items_sold: parseInt(summaryResult[0].total_items_sold || '0')
     };
 
     // Get recent payments
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       LIMIT 50
     `;
 
-    const payments = paymentsResult.rows.map(row => ({
+    const payments = paymentsResult.map(row => ({
       ...row,
       business_unit_price: parseFloat(row.business_unit_price),
       total_business_payment: parseFloat(row.total_business_payment),
@@ -72,8 +72,8 @@ export async function GET(request: NextRequest) {
     `;
 
     const todayStats = {
-      today_earnings: parseFloat(todayResult.rows[0].today_earnings || '0'),
-      today_items_sold: parseInt(todayResult.rows[0].today_items_sold || '0')
+      today_earnings: parseFloat(todayResult[0].today_earnings || '0'),
+      today_items_sold: parseInt(todayResult[0].today_items_sold || '0')
     };
 
     return NextResponse.json({

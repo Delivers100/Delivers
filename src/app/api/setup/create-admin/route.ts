@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       SELECT id FROM users WHERE account_type = 'admin'
     `;
 
-    if (existingAdmin.rows.length > 0) {
+    if (existingAdmin.length > 0) {
       return NextResponse.json(
         { error: 'Admin user already exists' },
         { status: 400 }

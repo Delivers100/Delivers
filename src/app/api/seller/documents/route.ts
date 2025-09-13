@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     `;
 
     return NextResponse.json({
-      documents: result.rows
+      documents: result
     });
   } catch (error) {
     console.error('Get documents error:', error);
